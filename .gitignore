@@ -4,3 +4,4 @@ bin/
 include/GLEW/
 include/GLFW/
 include/glm/
+int/

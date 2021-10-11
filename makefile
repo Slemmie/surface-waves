@@ -10,10 +10,10 @@ INCLUDE_PATH = ./include/
 
 ## source files
 SRC_FILES = \
-./src/driver.cpp \
-./src/callbacks.cpp \
-./src/camera.cpp \
-./src/shader_program.cpp
+$(SRC_PATH)driver.cpp \
+$(SRC_PATH)callbacks.cpp \
+$(SRC_PATH)camera.cpp \
+$(SRC_PATH)shader_program.cpp
 
 ## default
 all: release
@@ -27,7 +27,7 @@ debug_prep:
 	if [ ! -d "./bin" ]; then mkdir ./bin; fi;
 
 debug_compile:
-	g++ $(CXX_FLAGS) $(SRC_PATH)*.cpp -o driver_debug \
+	g++ $(CXX_FLAGS) $(SRC_FILES) -o driver_debug \
 	-L ./bin/GLFW/ -lGL -lglfw3 -ldl -lpthread -L ./bin/GLEW/ -lglew $(CXX_DEBUG_FLAGS) \
 	-I $(INCLUDE_PATH)
 	if [ ! -f "driver_debug" ]; then mv driver_debug ./bin/driver_debug; fi;
@@ -41,7 +41,7 @@ release_prep:
 	if [ ! -d "./bin" ]; then mkdir ./bin; fi;
 
 release_compile:
-	g++ $(CXX_FLAGS) $(SRC_PATH)*.cpp -o driver_release \
+	g++ $(CXX_FLAGS) $(SRC_FILES) -o driver_release \
 	-L ./bin/GLFW/ -lGL -lglfw3 -ldl -lpthread -L ./bin/GLEW/ -lglew $(CXX_RELEASE_FLAGS) \
 	-I $(INCLUDE_PATH)
 	if [ ! -f "driver_release" ]; then mv driver_release ./bin/driver_release; fi;

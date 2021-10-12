@@ -20,6 +20,8 @@ namespace callback {
 	static bool space_pressed = false;
 	static bool shift_pressed = false;
 	
+	static bool mouse_locked = true;
+	
 	void update_movement() {
 		if (w_pressed) {
 			scene_args::camera->move_position(CAM_FORWARD, scene_args::delta_time);
@@ -38,6 +40,15 @@ namespace callback {
 		}
 		if (shift_pressed) {
 			scene_args::camera->move_position(CAM_DOWN, scene_args::delta_time);
+		}
+	}
+	
+	void toggle_mouse_lock() {
+		mouse_locked ^= 1;
+		if (mouse_locked) {
+			glfwSetInputMode(scene_args::window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+		} else {
+			glfwSetInputMode(scene_args::window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 		}
 	}
 	
@@ -65,6 +76,11 @@ namespace callback {
 		case GLFW_KEY_LEFT_SHIFT:
 			shift_pressed = set;
 			break;
+		case GLFW_KEY_ESCAPE:
+			if (action == GLFW_PRESS) {
+				toggle_mouse_lock();
+			}
+			break;
 		default:
 			break;
 		};
@@ -76,6 +92,10 @@ namespace callback {
 	
 	void mouse_move(GLFWwindow* window, double x_pos, double y_pos) {
 		static bool first_move = true;
+		if (!mouse_locked) {
+			first_move = true;
+			return;
+		}
 		static double x_prv, y_prv;
 		if (first_move) {
 			first_move = false;

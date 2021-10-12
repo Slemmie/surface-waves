@@ -77,6 +77,9 @@ int main() {
 	
 	scene_args::camera = std::make_shared <Camera> (glm::vec3(0.0f, 0.0f, 3.0f));
 	scene_args::camera->move_speed() = 10.0f;
+	scene_args::camera->mouse_sens() = 0.06f;
+	
+	glfwSetInputMode(scene_args::window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	
 	float vertices[settings::plane_resolution * settings::plane_resolution * 3];
 	for (int i = 0, ptr = 0; i < settings::plane_resolution; i++) {

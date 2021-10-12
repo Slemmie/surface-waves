@@ -4,16 +4,16 @@
 ##### glew github page specifies some additional tools:
 
 	$ sudo apt-get install build-essential libxmu-dev libxi-dev libgl-dev
-##### Clone with submodules and run:
+##### Clone with submodules and build:
 
 	$ git clone --recurse-submodules https://github.com/Slemmie/surface-waves.git
 	$ cd surface-waves
 	$ make deps
 	$ make
-##### Execute with:
+##### Execute:
 
 	$ ./driver_release
-##### Build and execute in debug mode with:
+##### Build and execute in debug mode:
 
 	$ make debug
 	$ ./driver_debug

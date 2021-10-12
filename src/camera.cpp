@@ -1,5 +1,7 @@
 #include <camera.h>
 
+#include <algorithm>
+
 Camera::Camera(glm::vec3 _position, glm::vec3 _world_up, float _yaw, float _pitch) :
 m_position(_position),
 m_front(glm::vec3(0.0f, 0.0f, -1.0f)),

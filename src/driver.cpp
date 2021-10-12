@@ -23,8 +23,8 @@ int settings::window_height = 480;
 float settings::bg_r = 0.2f;
 float settings::bg_g = 0.2f;
 float settings::bg_b = 0.2f;
-const int settings::plane_resolution = 10;
-const int settings::plane_size = 10;
+const int settings::plane_resolution = 100;
+const int settings::plane_size = 50;
 const char* settings::vert_path = "src/shaders/vert.glsl";
 const char* settings::frag_path = "src/shaders/frag.glsl";
 

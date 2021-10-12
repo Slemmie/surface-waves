@@ -35,7 +35,7 @@ void main() {
 	p += gerstner_wave(waveB, grid_pos);
 	p += gerstner_wave(waveC, grid_pos);
 	
-	p *= 0.4f;
+	//p *= 0.4f;
 	
 	gl_Position = u_projection * u_view * u_model * vec4(p.x, p.y, p.z, 1.0f);
 	pos = vec3(p.x, p.y, p.z);

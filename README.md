@@ -1,7 +1,7 @@
 # Surface-waves
 # Setup
 ### Debian/Ubuntu
-##### glew github page specifies some additional tools:
+##### glew github page specifies some additional required tools:
 
 	$ sudo apt-get install build-essential libxmu-dev libxi-dev libgl-dev
 ##### Clone with submodules and build:

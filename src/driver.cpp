@@ -137,8 +137,7 @@ int main() {
 		scene_args::shader_program->set_uniform_mat4f("u_view", view);
 		
 		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-		scene_args::shader_program->set_uniform_mat4f("u_model", view);
+		scene_args::shader_program->set_uniform_mat4f("u_model", model);
 		
 		int triangles = (settings::plane_resolution - 1) * (settings::plane_resolution - 1);
 		glDrawElements(GL_TRIANGLES, triangles * 3 * 2, GL_UNSIGNED_INT, 0);

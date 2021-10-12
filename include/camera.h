@@ -17,7 +17,7 @@ public:
 	Camera(
 	glm::vec3 _position = glm::vec3(0.0f, 0.0f, 0.0f),
 	glm::vec3 _world_up = glm::vec3(0.0f, 1.0f, 0.0f),
-	float _yaw = -90.0f, float _pitch = 0.0f);
+	float _yaw = 90.0f, float _pitch = 0.0f);
 	
 	inline glm::mat4 view_matrix() const {
 		return glm::lookAt(m_position, m_position + m_front, m_up);

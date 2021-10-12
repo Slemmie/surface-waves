@@ -25,6 +25,18 @@ public:
 	inline float zoom() const {
 		return m_zoom;
 	}
+	inline float move_speed() const {
+		return m_mvspeed;
+	}
+	inline float& move_speed() {
+		return m_mvspeed;
+	}
+	inline float mouse_sens() const {
+		return m_mouse_sens;
+	}
+	inline float& mouse_sens() {
+		return m_mouse_sens;
+	}
 	
 	void move_position(int cam_dir, float dt);
 	

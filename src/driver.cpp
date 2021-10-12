@@ -18,8 +18,8 @@ std::shared_ptr <Shader_program> scene_args::shader_program = nullptr;
 std::shared_ptr <Camera> scene_args::camera = nullptr;
 float scene_args::delta_time = 0.0f;
 
-int settings::window_width = 640;
-int settings::window_height = 480;
+int settings::window_width = 1366;
+int settings::window_height = 768;
 float settings::bg_r = 0.2f;
 float settings::bg_g = 0.2f;
 float settings::bg_b = 0.2f;
@@ -74,7 +74,9 @@ int main() {
 	glEnable(GL_DEPTH_TEST);
 	
 	scene_args::shader_program = std::make_shared <Shader_program> (settings::vert_path, settings::frag_path);
+	
 	scene_args::camera = std::make_shared <Camera> (glm::vec3(0.0f, 0.0f, 3.0f));
+	scene_args::camera->move_speed() = 10.0f;
 	
 	float vertices[settings::plane_resolution * settings::plane_resolution * 3];
 	for (int i = 0, ptr = 0; i < settings::plane_resolution; i++) {

@@ -28,6 +28,12 @@ void Camera::move_position(int cam_dir, float dt) {
 	case CAM_RIGHT:
 		m_position += m_right * vel;
 		break;
+	case CAM_UP:
+		m_position += m_up * vel;
+		break;
+	case CAM_DOWN:
+		m_position -= m_up * vel;
+		break;
 	default:
 		break;
 	};
@@ -37,7 +43,7 @@ void Camera::move_looking(float offset_x, float offset_y, bool constrain_pitch) 
 	offset_x *= m_mouse_sens;
 	offset_y *= m_mouse_sens;
 	m_yaw += offset_x;
-	m_pitch += offset_y;
+	m_pitch -= offset_y;
 	if (constrain_pitch) {
 		m_pitch = std::min(m_pitch, 89.0f);
 		m_pitch = std::max(m_pitch, -89.0f);

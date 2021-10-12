@@ -7,6 +7,8 @@
 #define CAM_BACKWARD    (1 << 1)
 #define CAM_LEFT        (1 << 2)
 #define CAM_RIGHT       (1 << 3)
+#define CAM_UP          (1 << 4)
+#define CAM_DOWN        (1 << 5)
 
 class Camera {
 	

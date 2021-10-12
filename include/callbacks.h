@@ -7,6 +7,8 @@ namespace callback {
 	
 	extern void error(int id, const char* msg);
 	
+	void update_movement();
+	
 	extern void keyboard_key(GLFWwindow* window, int key, int scan, int action, int mods);
 	
 	extern void window_resize(GLFWwindow* window, int width, int height);

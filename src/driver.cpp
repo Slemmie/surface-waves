@@ -23,8 +23,10 @@ int settings::window_height = 768;
 float settings::bg_r = 0.2f;
 float settings::bg_g = 0.2f;
 float settings::bg_b = 0.2f;
-const int settings::plane_resolution = 100;
-const int settings::plane_size = 50;
+//const int settings::plane_resolution = 1000;
+//const int settings::plane_size = 500;
+const int settings::plane_resolution = 1000;
+const int settings::plane_size = 300;
 const char* settings::vert_path = "src/shaders/vert.glsl";
 const char* settings::frag_path = "src/shaders/frag.glsl";
 
@@ -75,7 +77,7 @@ int main() {
 	
 	scene_args::shader_program = std::make_shared <Shader_program> (settings::vert_path, settings::frag_path);
 	
-	scene_args::camera = std::make_shared <Camera> (glm::vec3(0.0f, 0.0f, 3.0f));
+	scene_args::camera = std::make_shared <Camera> (glm::vec3(0.0f, 3.0f, 20.0f));
 	scene_args::camera->move_speed() = 10.0f;
 	scene_args::camera->mouse_sens() = 0.06f;
 	
@@ -143,7 +145,7 @@ int main() {
 		glBindVertexArray(vao);
 		
 		glm::mat4 projection = glm::perspective(glm::radians(scene_args::camera->zoom()),
-		(float)settings::window_width / (float)settings::window_height , 0.1f, 100.0f);
+		(float)settings::window_width / (float)settings::window_height , 0.1f, 1000.0f);
 		scene_args::shader_program->set_uniform_mat4f("u_projection", projection);
 		
 		glm::mat4 view = scene_args::camera->view_matrix();

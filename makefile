@@ -18,6 +18,12 @@ $(SRC_PATH)shader_program.cpp
 ## default
 all: release
 
+## dependencies
+deps:
+	cd ./vendor/ && make glfw
+	cd ./vendor/ && make glew
+	cd ./vendor/ && make glm
+
 ## debug
 debug: debug_prep debug_compile clean print_done
 

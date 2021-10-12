@@ -13,6 +13,8 @@ m_program_id(0)
 	char* fragment_buffer = nullptr;
 	m_read_source(_fragment_path, fragment_buffer);
 	m_program_id = m_create_shader(vertex_buffer, fragment_buffer);
+	free(vertex_buffer);
+	free(fragment_buffer);
 }
 
 Shader_program::~Shader_program() {

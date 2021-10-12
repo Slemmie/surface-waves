@@ -8,6 +8,7 @@
 #include <camera.h>
 
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 #include <iostream>
 #include <memory>
@@ -22,7 +23,8 @@ int settings::window_height = 480;
 float settings::bg_r = 0.2f;
 float settings::bg_g = 0.2f;
 float settings::bg_b = 0.2f;
-float settings::plane_resolution = 10.0f;
+const int settings::plane_resolution = 10;
+const int settings::plane_size = 10;
 const char* settings::vert_path = "src/shaders/vert.glsl";
 const char* settings::frag_path = "src/shaders/frag.glsl";
 
@@ -74,15 +76,58 @@ int main() {
 	scene_args::shader_program = std::make_shared <Shader_program> (settings::vert_path, settings::frag_path);
 	scene_args::camera = std::make_shared <Camera> (glm::vec3(0.0f, 0.0f, 3.0f));
 	
+	float vertices[settings::plane_resolution * settings::plane_resolution * 3];
+	for (int i = 0, ptr = 0; i < settings::plane_resolution; i++) {
+		for (int j = 0; j < settings::plane_resolution; j++) {
+			float shift = -1.0f * (float)settings::plane_size / 2.0f;
+			float which_i = (float)i / (float)settings::plane_resolution * (float)settings::plane_size;
+			float which_j = (float)j / (float)settings::plane_resolution * (float)settings::plane_size;
+			which_i += shift;
+			which_j += shift;
+			vertices[ptr++] = which_i;
+			vertices[ptr++] = 0;
+			vertices[ptr++] = which_j;
+		}
+	}
+	unsigned int indices[(settings::plane_resolution - 1) * (settings::plane_resolution - 1) * 3 * 2];
+	for (int i = 0, ptr = 0; i + 1 < settings::plane_resolution; i++) {
+		for (int j = 0; j + 1 < settings::plane_resolution; j++) {
+			indices[ptr++] = i * settings::plane_resolution + j;
+			indices[ptr++] = i * settings::plane_resolution + j + 1;
+			indices[ptr++] = (i + 1) * settings::plane_resolution + j;
+			
+			indices[ptr++] = i * settings::plane_resolution + j + 1;
+			indices[ptr++] = (i + 1) * settings::plane_resolution + j + 1;
+			indices[ptr++] = (i + 1) * settings::plane_resolution + j;
+		}
+	}
+	
+	unsigned int vao, vbo, ebo;
+	glGenVertexArrays(1, &vao);
+	glGenBuffers(1, &vbo);
+	glGenBuffers(1, &ebo);
+	glBindVertexArray(vao);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, (void*)0);
+	glEnableVertexAttribArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+	
 	while (!glfwWindowShouldClose(scene_args::window)) {
 		float time_now = glfwGetTime();
 		static float time_prv = 0.0f;
 		scene_args::delta_time = time_now - time_prv;
 		time_prv = time_now;
 		
+		callback::update_movement();
+		
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
 		scene_args::shader_program->bind();
+		glBindVertexArray(vao);
 		
 		glm::mat4 projection = glm::perspective(glm::radians(scene_args::camera->zoom()),
 		(float)settings::window_width / (float)settings::window_height , 0.1f, 100.0f);
@@ -91,10 +136,22 @@ int main() {
 		glm::mat4 view = scene_args::camera->view_matrix();
 		scene_args::shader_program->set_uniform_mat4f("u_view", view);
 		
+		glm::mat4 model = glm::mat4(1.0f);
+		model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+		scene_args::shader_program->set_uniform_mat4f("u_model", view);
+		
+		int triangles = (settings::plane_resolution - 1) * (settings::plane_resolution - 1);
+		glDrawElements(GL_TRIANGLES, triangles * 3 * 2, GL_UNSIGNED_INT, 0);
+		glBindVertexArray(0);
+		
 		glfwSwapBuffers(scene_args::window);
 		
 		glfwPollEvents();
 	}
+	
+	glDeleteVertexArrays(1, &vao);
+	glDeleteBuffers(1, &vbo);
+	glDeleteBuffers(1, &ebo);
 	
 	glfwDestroyWindow(scene_args::window);
 	glfwTerminate();

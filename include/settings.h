@@ -9,7 +9,8 @@ namespace settings {
 	extern float bg_g;
 	extern float bg_b;
 	
-	extern float plane_resolution;
+	extern const int plane_resolution;
+	extern const int plane_size;
 	
 	extern const char* vert_path;
 	extern const char* frag_path;

@@ -13,25 +13,14 @@ namespace callback {
 		std::cerr << "[error]: " << msg << " (ID: " << id << ")" << std::endl;
 	}
 	
-	void keyboard_key(GLFWwindow* window, int key, int scan, int action, int mods) {
-		static bool w_pressed = false;
-		static bool a_pressed = false;
-		static bool s_pressed = false;
-		static bool d_pressed = false;
-		switch (key) {
-		case GLFW_KEY_W:
-			w_pressed = action == GLFW_PRESS;
-			break;
-		case GLFW_KEY_A:
-			a_pressed = action == GLFW_PRESS;
-			break;
-		case GLFW_KEY_S:
-			s_pressed = action == GLFW_PRESS;
-			break;
-		case GLFW_KEY_D:
-			d_pressed = action == GLFW_PRESS;
-			break;
-		};
+	static bool w_pressed = false;
+	static bool a_pressed = false;
+	static bool s_pressed = false;
+	static bool d_pressed = false;
+	static bool space_pressed = false;
+	static bool shift_pressed = false;
+	
+	void update_movement() {
 		if (w_pressed) {
 			scene_args::camera->move_position(CAM_FORWARD, scene_args::delta_time);
 		}
@@ -44,6 +33,41 @@ namespace callback {
 		if (d_pressed) {
 			scene_args::camera->move_position(CAM_RIGHT, scene_args::delta_time);
 		}
+		if (space_pressed) {
+			scene_args::camera->move_position(CAM_UP, scene_args::delta_time);
+		}
+		if (shift_pressed) {
+			scene_args::camera->move_position(CAM_DOWN, scene_args::delta_time);
+		}
+	}
+	
+	void keyboard_key(GLFWwindow* window, int key, int scan, int action, int mods) {
+		bool set = true;
+		if (action == GLFW_RELEASE) {
+			set = false;
+		}
+		switch (key) {
+		case GLFW_KEY_W:
+			w_pressed = set;
+			break;
+		case GLFW_KEY_A:
+			a_pressed = set;
+			break;
+		case GLFW_KEY_S:
+			s_pressed = set;
+			break;
+		case GLFW_KEY_D:
+			d_pressed = set;
+			break;
+		case GLFW_KEY_SPACE:
+			space_pressed = set;
+			break;
+		case GLFW_KEY_LEFT_SHIFT:
+			shift_pressed = set;
+			break;
+		default:
+			break;
+		};
 	}
 	
 	void window_resize(GLFWwindow* window, int width, int height) {
@@ -60,6 +84,8 @@ namespace callback {
 		}
 		float x_offset = x_pos - x_prv;
 		float y_offset = y_pos - y_prv;
+		x_prv = x_pos;
+		y_prv = y_pos;
 		scene_args::camera->move_looking(x_offset, y_offset);
 	}
 	

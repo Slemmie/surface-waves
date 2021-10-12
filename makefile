@@ -23,7 +23,8 @@ deps:
 	cd ./vendor/ && make glfw
 	cd ./vendor/ && make glew
 	cd ./vendor/ && make glm
-	git submodule foreach --recursive git reset --hard
+	git submodule deinit -f .
+	git submodule update --init
 
 ## debug
 debug: debug_prep debug_compile clean print_done

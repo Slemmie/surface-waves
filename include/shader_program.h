@@ -22,6 +22,7 @@ public:
 	}
 	
 	void set_uniform_mat4f(const char* name, const glm::mat4& v0);
+	void set_uniform_1f(const char* name, const float v0);
 	
 private:
 	

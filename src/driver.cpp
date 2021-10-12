@@ -121,6 +121,14 @@ int main() {
 		static float time_prv = 0.0f;
 		scene_args::delta_time = time_now - time_prv;
 		time_prv = time_now;
+		static float fps_prv_time = 0.0f;
+		static unsigned int fps_frame_cnt = 0;
+		fps_frame_cnt++;
+		if (time_now - fps_prv_time >= 1.0f) {
+			std::cerr << "fps: " << fps_frame_cnt << std::endl;
+			fps_frame_cnt = 0;
+			fps_prv_time = time_now;
+		}
 		
 		callback::update_movement();
 		
@@ -138,6 +146,8 @@ int main() {
 		
 		glm::mat4 model = glm::mat4(1.0f);
 		scene_args::shader_program->set_uniform_mat4f("u_model", model);
+		
+		scene_args::shader_program->set_uniform_1f("u_time", time_now);
 		
 		int triangles = (settings::plane_resolution - 1) * (settings::plane_resolution - 1);
 		glDrawElements(GL_TRIANGLES, triangles * 3 * 2, GL_UNSIGNED_INT, 0);

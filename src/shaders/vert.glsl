@@ -6,7 +6,13 @@ uniform mat4 u_projection;
 uniform mat4 u_view;
 uniform mat4 u_model;
 
+uniform float u_time;
+
+out vec3 pos;
+
 void main() {
-	gl_Position = u_projection * u_view * u_model * vec4(vpos, 1.0);
-	//gl_Position = vec4(vpos.x, vpos.y, vpos.z, 1.0);
+	float height = sin(0.4 * vpos.x + 0.4 * vpos.z + u_time) * 0.3;
+	gl_Position = u_projection * u_view * u_model *
+	vec4(vpos.x, vpos.y + height, vpos.z, 1.0);
+	pos = vec3(vpos.x, vpos.y + height, vpos.z);
 }

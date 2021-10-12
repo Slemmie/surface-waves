@@ -2,6 +2,8 @@
 
 out vec4 color;
 
+in vec3 pos;
+
 void main() {
-	color = vec4(1.0f, 1.0f, 1.0f, 1.0f);
+	color = vec4(0.5f + pos.y * 0.2, 0.5f + pos.y * 0.2, 0.5f + pos.y * 0.2, 1.0f);
 }

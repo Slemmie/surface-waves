@@ -81,6 +81,13 @@ namespace callback {
 				toggle_mouse_lock();
 			}
 			break;
+		case GLFW_KEY_LEFT_CONTROL:
+			if (action == GLFW_PRESS) {
+				scene_args::camera->move_speed() = 100.0f;
+			} else if (action == GLFW_RELEASE) {
+				scene_args::camera->move_speed() = 10.0f;
+			}
+			break;
 		default:
 			break;
 		};

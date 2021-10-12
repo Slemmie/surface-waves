@@ -25,9 +25,9 @@ vec3 gerstner_wave(vec4 wave, vec3 pos) {
 
 void main() {
 	// direction.x, direction.y, steepness, wavelength
-	vec4 waveA = vec4(1.0f, 1.0f, 0.25f, 60.0f);
-	vec4 waveB = vec4(1.0f, 0.6f, 0.25f, 31.0f);
-	vec4 waveC = vec4(1.0f, 1.3f, 0.25f, 18.0f);
+	vec4 waveA = vec4(1.0f, 1.0f, 0.2f, 60.0f);
+	vec4 waveB = vec4(1.0f, 0.6f, 0.2f, 31.0f);
+	vec4 waveC = vec4(1.0f, 1.3f, 0.2f, 18.0f);
 	
 	vec3 grid_pos = vpos;
 	vec3 p = grid_pos;
@@ -35,8 +35,11 @@ void main() {
 	p += gerstner_wave(waveB, grid_pos);
 	p += gerstner_wave(waveC, grid_pos);
 	
-	//p *= 0.4f;
+	vec3 P = p;
+	
+	p.y += vpos.x * vpos.x * -0.00005f + vpos.z * vpos.z * -0.00005f;
+	p.y = max(p.y, -100.0f);
 	
 	gl_Position = u_projection * u_view * u_model * vec4(p.x, p.y, p.z, 1.0f);
-	pos = vec3(p.x, p.y, p.z);
+	pos = vec3(P.x, P.y, P.z);
 }

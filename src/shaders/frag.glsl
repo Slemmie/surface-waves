@@ -5,5 +5,11 @@ out vec4 color;
 in vec3 pos;
 
 void main() {
-	color = vec4(0.5f + pos.y * 0.04f, 0.5f + pos.y * 0.04f, 0.8f + pos.y * 0.04f, 1.0f);
+	float col = max(-0.3f, pos.y * 0.04f);
+	// blue
+	//color = vec4(0.4f + col, 0.4f + col, 0.8f + col, 1.0f);
+	// medium blue
+	color = vec4(0.3f + col, 0.3f + col, 0.6f + col, 1.0f);
+	// dark blue
+	//color = vec4(0.2f + col, 0.2f + col, 0.4f + col, 1.0f);
 }

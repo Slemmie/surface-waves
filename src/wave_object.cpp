@@ -6,6 +6,8 @@
 #include <settings.h>
 #include <scene_args.h>
 
+#include <string>
+
 Waves::Waves() :
 m_vao(0),
 m_vbo(0),
@@ -65,7 +67,7 @@ void Waves::init(const char* vert_path, const char* frag_path) {
 	glBindVertexArray(0);
 }
 
-void Waves::draw(const float time_now) {
+void Waves::draw(const float time_now, const std::vector <Light>& lights) {
 	m_shader_program->bind();
 	glBindVertexArray(m_vao);
 	
@@ -80,6 +82,11 @@ void Waves::draw(const float time_now) {
 	m_shader_program->set_uniform_mat4f("u_model", model);
 	
 	m_shader_program->set_uniform_1f("u_time", time_now);
+	
+	for (size_t i = 0; i < lights.size(); i++) {
+		std::string uname = "u_light_" + std::to_string(i);
+		m_shader_program->set_uniform_vec3f(uname.c_str(), lights[i].light_color());
+	}
 	
 	int triangles = (settings::plane_resolution - 1) * (settings::plane_resolution - 1);
 	glDrawElements(GL_TRIANGLES, triangles * 3 * 2, GL_UNSIGNED_INT, 0);

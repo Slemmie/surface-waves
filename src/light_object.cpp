@@ -10,7 +10,8 @@ Light::Light() :
 m_vao(0),
 m_vbo(0),
 m_ebo(0),
-m_shader_program(nullptr)
+m_shader_program(nullptr),
+m_light_color(0.95f, 0.95f, 0.95f)
 {
 	
 }
@@ -83,6 +84,8 @@ void Light::draw(const float time_now) {
 	m_shader_program->set_uniform_mat4f("u_model", model);
 	
 	m_shader_program->set_uniform_1f("u_time", time_now);
+	
+	m_shader_program->set_uniform_vec3f("u_light_color", m_light_color);
 	
 	glDrawElements(GL_TRIANGLES, 3 * 2 * 6, GL_UNSIGNED_INT, 0);
 	

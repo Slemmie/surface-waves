@@ -82,8 +82,8 @@ int main() {
 	Waves waves;
 	waves.init("src/shaders/wave_vert.glsl", "src/shaders/wave_frag.glsl");
 	
-	Light light;
-	light.init("src/shaders/lightsource_vert.glsl", "src/shaders/lightsource_frag.glsl");
+	std::vector <Light> lights(1);
+	lights[0].init("src/shaders/lightsource_vert.glsl", "src/shaders/lightsource_frag.glsl");
 	
 	Fps fps;
 	fps.enable_tracing(true);
@@ -101,9 +101,9 @@ int main() {
 		
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
-		light.draw(time_now);
+		lights[0].draw(time_now);
 		
-		waves.draw(time_now);
+		waves.draw(time_now, lights);
 		
 		glfwSwapBuffers(scene_args::window);
 		

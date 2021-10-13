@@ -5,7 +5,10 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include <light_object.h>
+
 #include <memory>
+#include <vector>
 
 class Waves {
 	
@@ -17,7 +20,7 @@ public:
 	
 	void init(const char* vert_path, const char* frag_path);
 	
-	void draw(const float time_now);
+	void draw(const float time_now, const std::vector <Light>& lights);
 	
 	inline unsigned int vao() const {
 		return m_vao;

@@ -19,6 +19,10 @@ public:
 	
 	void draw(const float time_now);
 	
+	inline const glm::vec3& light_color() const {
+		return m_light_color;
+	}
+	
 	inline unsigned int vao() const {
 		return m_vao;
 	}
@@ -36,5 +40,7 @@ private:
 	unsigned int m_vao, m_vbo, m_ebo;
 	
 	std::shared_ptr <Shader_program> m_shader_program;
+	
+	glm::vec3 m_light_color;
 	
 };

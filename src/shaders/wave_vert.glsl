@@ -8,6 +8,11 @@ uniform mat4 u_model;
 
 uniform float u_time;
 
+uniform vec3 u_light_0;
+
+out vec3 light_0;
+out float ambient_strength_0;
+
 out vec3 pos;
 
 #define PI_f 3.1415926538f
@@ -42,4 +47,7 @@ void main() {
 	
 	gl_Position = u_projection * u_view * u_model * vec4(p.x, p.y, p.z, 1.0f);
 	pos = vec3(P.x, P.y, P.z);
+	
+	light_0 = u_light_0;
+	ambient_strength_0 = 0.15f;
 }

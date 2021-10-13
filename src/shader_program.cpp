@@ -29,6 +29,10 @@ void Shader_program::set_uniform_1f(const char* name, const float v0) {
 	glUniform1f(m_get_uniform_location(name), v0);
 }
 
+void Shader_program::set_uniform_vec3f(const char* name, const glm::vec3& v0) {
+	glUniform3fv(m_get_uniform_location(name), 1, glm::value_ptr(v0));
+}
+
 int Shader_program::m_get_uniform_location(const char* name) {
 	auto it = m_uniform_location_map.find(name);
 	if (it != m_uniform_location_map.end()) {

@@ -7,6 +7,7 @@
 #include <shader_program.h>
 #include <camera.h>
 #include <wave_object.h>
+#include <light_object.h>
 #include <fps.h>
 
 #include <glm/glm.hpp>
@@ -81,6 +82,9 @@ int main() {
 	Waves waves;
 	waves.init("src/shaders/wave_vert.glsl", "src/shaders/wave_frag.glsl");
 	
+	Light light;
+	light.init("src/shaders/lightsource_vert.glsl", "src/shaders/lightsource_frag.glsl");
+	
 	Fps fps;
 	fps.enable_tracing(true);
 	fps.set_trace_interval(10.0f);
@@ -96,6 +100,8 @@ int main() {
 		callback::update_movement();
 		
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		
+		light.draw(time_now);
 		
 		waves.draw(time_now);
 		

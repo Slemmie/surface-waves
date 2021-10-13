@@ -12,7 +12,4 @@ namespace settings {
 	extern const int plane_resolution;
 	extern const int plane_size;
 	
-	extern const char* vert_path;
-	extern const char* frag_path;
-	
 } /// namespace settings

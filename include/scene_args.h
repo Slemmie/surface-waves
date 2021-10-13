@@ -11,8 +11,6 @@ namespace scene_args {
 	
 	extern GLFWwindow* window;
 	
-	extern std::shared_ptr <Shader_program> shader_program;
-	
 	extern std::shared_ptr <Camera> camera;
 	
 	extern float delta_time;

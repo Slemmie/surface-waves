@@ -19,7 +19,8 @@ SRC_FILES = \
 $(SRC_PATH)driver.cpp \
 $(SRC_PATH)callbacks.cpp \
 $(SRC_PATH)camera.cpp \
-$(SRC_PATH)shader_program.cpp
+$(SRC_PATH)shader_program.cpp \
+$(SRC_PATH)wave_object.cpp
 
 ## default
 all: release

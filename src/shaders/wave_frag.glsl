@@ -12,7 +12,7 @@ in float specular_strength_0;
 
 in vec3 pos;
 
-float shininess = 32.0f;
+float shininess = 64.0f;
 
 void main() {
 	vec3 norm = normalize(normal);

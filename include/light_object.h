@@ -23,6 +23,10 @@ public:
 		return m_light_color;
 	}
 	
+	inline const glm::vec3& light_pos() const {
+		return m_position;
+	}
+	
 	inline unsigned int vao() const {
 		return m_vao;
 	}
@@ -42,5 +46,7 @@ private:
 	std::shared_ptr <Shader_program> m_shader_program;
 	
 	glm::vec3 m_light_color;
+	
+	glm::vec3 m_position, m_scale;
 	
 };

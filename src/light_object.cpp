@@ -11,7 +11,9 @@ m_vao(0),
 m_vbo(0),
 m_ebo(0),
 m_shader_program(nullptr),
-m_light_color(0.95f, 0.95f, 0.95f)
+m_light_color(0.9f, 0.9f, 0.9f),
+m_position(150.0f, 100.0f, 15.0f),
+m_scale(5.0f, 5.0f, 5.0f)
 {
 	
 }
@@ -76,10 +78,12 @@ void Light::draw(const float time_now) {
 	glm::mat4 view = scene_args::camera->view_matrix();
 	m_shader_program->set_uniform_mat4f("u_view", view);
 	
+	m_position = glm::vec3(std::sin(time_now * 0.006f) * 225.0f, 100.0f, std::cos(time_now * 0.006f) * 225.0f);
+	
 	glm::mat4 model = glm::mat4(1.0f);
-	glm::vec3 position = glm::vec3(15.0f, 40.0f, 15.0f);
+	glm::vec3 position = m_position;
 	model = glm::translate(model, position);
-	glm::vec3 scale = glm::vec3(5.0f, 5.0f, 5.0f);
+	glm::vec3 scale = m_scale;
 	model = glm::scale(model, scale);
 	m_shader_program->set_uniform_mat4f("u_model", model);
 	

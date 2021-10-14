@@ -86,6 +86,8 @@ void Waves::draw(const float time_now, const std::vector <Light>& lights) {
 	for (size_t i = 0; i < lights.size(); i++) {
 		std::string uname = "u_light_" + std::to_string(i);
 		m_shader_program->set_uniform_vec3f(uname.c_str(), lights[i].light_color());
+		uname += "_pos";
+		m_shader_program->set_uniform_vec3f(uname.c_str(), lights[i].light_pos());
 	}
 	
 	int triangles = (settings::plane_resolution - 1) * (settings::plane_resolution - 1);

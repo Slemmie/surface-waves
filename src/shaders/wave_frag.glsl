@@ -4,16 +4,22 @@ out vec4 color;
 
 in vec3 light_0;
 in float ambient_strength_0;
+in vec3 normal;
+in vec3 light_0_pos;
 
 in vec3 pos;
 
 void main() {
-	float col = max(-0.3f, pos.y * 0.03f);
-	// blue
-	//color = vec4(0.4f + col, 0.4f + col, 0.8f + col, 1.0f);
-	// medium blue
-	color = vec4(0.3f + col, 0.3f + col, 0.6f + col, 1.0f);
-	color.xyz *= light_0 * ambient_strength_0;
-	// dark blue
-	//color = vec4(0.2f + col, 0.2f + col, 0.4f + col, 1.0f);
+	vec3 norm = normalize(normal);
+	
+	color = vec4(0.3f, 0.3f, 0.6f, 1.0f);
+	
+	// ambient
+	vec3 ambient = light_0 * ambient_strength_0;
+	// diffuse
+	vec3 light_0_dir = normalize(light_0_pos - pos);
+	vec3 diffuse = max(dot(norm, light_0_dir), 0.0f) * light_0;
+	// final
+	vec3 final = (ambient + diffuse) * color.xyz;
+	color = vec4(final, 1.0f);
 }

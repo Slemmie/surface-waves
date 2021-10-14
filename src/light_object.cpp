@@ -77,10 +77,10 @@ void Light::draw(const float time_now) {
 	m_shader_program->set_uniform_mat4f("u_view", view);
 	
 	glm::mat4 model = glm::mat4(1.0f);
+	glm::vec3 position = glm::vec3(15.0f, 40.0f, 15.0f);
+	model = glm::translate(model, position);
 	glm::vec3 scale = glm::vec3(5.0f, 5.0f, 5.0f);
 	model = glm::scale(model, scale);
-	glm::vec3 position = glm::vec3(10.0f, 10.0f, 10.0f);
-	model = glm::translate(model, position);
 	m_shader_program->set_uniform_mat4f("u_model", model);
 	
 	m_shader_program->set_uniform_1f("u_time", time_now);

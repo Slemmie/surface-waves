@@ -8,7 +8,7 @@ in float ambient_strength_0;
 in vec3 pos;
 
 void main() {
-	float col = max(-0.3f, pos.y * 0.04f);
+	float col = max(-0.3f, pos.y * 0.03f);
 	// blue
 	//color = vec4(0.4f + col, 0.4f + col, 0.8f + col, 1.0f);
 	// medium blue

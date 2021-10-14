@@ -25,8 +25,8 @@ int settings::window_height = 768;
 float settings::bg_r = 0.2f;
 float settings::bg_g = 0.2f;
 float settings::bg_b = 0.2f;
-const int settings::plane_resolution = 2500;
-const int settings::plane_size = 4000;
+const int settings::plane_resolution = 3000;
+const int settings::plane_size = 2000;
 
 int main() {
 	

@@ -11,10 +11,15 @@ uniform float u_time;
 uniform vec3 u_light_0;
 uniform vec3 u_light_0_pos;
 
+uniform vec3 u_view_pos;
+
+out vec3 view_pos;
+
 out vec3 light_0;
 out float ambient_strength_0;
 out vec3 normal;
 out vec3 light_0_pos;
+out float specular_strength_0;
 
 out vec3 pos;
 
@@ -97,8 +102,11 @@ void main() {
 	gl_Position = u_projection * u_view * u_model * vec4(p.x, p.y, p.z, 1.0f);
 	pos = vec3(u_model * vec4(P.x, P.y, P.z, 1.0f));
 	
+	view_pos = u_view_pos;
+	
 	light_0 = u_light_0;
 	ambient_strength_0 = 0.15f;
 	normal = normalize(mat3(transpose(inverse(u_model))) * normalize(get_normal(p)));
 	light_0_pos = u_light_0_pos;
+	specular_strength_0 = 0.5f;
 }

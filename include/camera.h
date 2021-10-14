@@ -22,6 +22,9 @@ public:
 	inline glm::mat4 view_matrix() const {
 		return glm::lookAt(m_position, m_position + m_front, m_up);
 	}
+	inline glm::vec3 position() const {
+		return m_position;
+	}
 	inline float zoom() const {
 		return m_zoom;
 	}

@@ -90,6 +90,8 @@ void Waves::draw(const float time_now, const std::vector <Light>& lights) {
 		m_shader_program->set_uniform_vec3f(uname.c_str(), lights[i].light_pos());
 	}
 	
+	m_shader_program->set_uniform_vec3f("u_view_pos", scene_args::camera->position());
+	
 	int triangles = (settings::plane_resolution - 1) * (settings::plane_resolution - 1);
 	glDrawElements(GL_TRIANGLES, triangles * 3 * 2, GL_UNSIGNED_INT, 0);
 	

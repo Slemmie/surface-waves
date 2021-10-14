@@ -48,7 +48,7 @@ void main() {
 	p += gerstner_wave(waveH, grid_pos) * vec3(0.1f, 0.2f, 0.1f);
 	p += gerstner_wave(waveZ, grid_pos);
 	
-	float sub = max(0.0f, p.y * 0.05f);
+	float sub = max(0.03f, p.y * 0.05f);
 	p += gerstner_wave(waveD, grid_pos) * vec3(0.1f, 0.2f - sub, 0.1f);
 	p += gerstner_wave(waveE, grid_pos) * vec3(0.1f, 0.2f - sub, 0.1f);
 	p += gerstner_wave(waveF, grid_pos) * vec3(0.1f, 0.2f - sub, 0.1f);
@@ -63,5 +63,5 @@ void main() {
 	pos = vec3(P.x, P.y, P.z);
 	
 	light_0 = u_light_0;
-	ambient_strength_0 = 0.15f;
+	ambient_strength_0 = 1.0f;
 }

@@ -11,7 +11,9 @@ m_vao(0),
 m_vbo(0),
 m_ebo(0),
 m_shader_program(nullptr),
-m_light_color(0.9f, 0.9f, 0.9f),
+m_ambient(0.1f, 0.1f, 0.1f),
+m_diffuse(0.6f, 0.6f, 0.6f),
+m_specular(0.95f, 0.95f, 0.95f),
 m_position(150.0f, 100.0f, 15.0f),
 m_scale(5.0f, 5.0f, 5.0f)
 {
@@ -89,7 +91,8 @@ void Light::draw(const float time_now) {
 	
 	m_shader_program->set_uniform_1f("u_time", time_now);
 	
-	m_shader_program->set_uniform_vec3f("u_light_color", m_light_color);
+	m_shader_program->set_uniform_vec3f("u_light.ambient", ambient());
+	m_shader_program->set_uniform_vec3f("u_light.diffuse", diffuse());
 	
 	glDrawElements(GL_TRIANGLES, 3 * 2 * 6, GL_UNSIGNED_INT, 0);
 	

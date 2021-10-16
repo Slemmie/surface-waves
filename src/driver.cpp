@@ -20,8 +20,8 @@ GLFWwindow* scene_args::window = nullptr;
 std::shared_ptr <Camera> scene_args::camera = nullptr;
 float scene_args::delta_time = 0.0f;
 
-int settings::window_width = 1366;
-int settings::window_height = 768;
+int settings::window_width = 1536;
+int settings::window_height = 864;
 float settings::bg_r = 0.2f;
 float settings::bg_g = 0.2f;
 float settings::bg_b = 0.2f;
@@ -70,6 +70,9 @@ int main() {
 	
 	glfwSwapInterval(1);
 	
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	
 	glClearColor(settings::bg_r, settings::bg_g, settings::bg_b, 0.0f);
 	glEnable(GL_DEPTH_TEST);
 	
@@ -82,8 +85,8 @@ int main() {
 	Waves waves;
 	waves.init("src/shaders/wave_vert.glsl", "src/shaders/wave_frag.glsl");
 	
-	std::vector <Light> lights(1);
-	lights[0].init("src/shaders/lightsource_vert.glsl", "src/shaders/lightsource_frag.glsl");
+	Light light;
+	light.init("src/shaders/lightsource_vert.glsl", "src/shaders/lightsource_frag.glsl");
 	
 	Fps fps;
 	fps.enable_tracing(true);
@@ -101,9 +104,9 @@ int main() {
 		
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
-		lights[0].draw(time_now);
+		light.draw(time_now);
 		
-		waves.draw(time_now, lights);
+		waves.draw(time_now, light);
 		
 		glfwSwapBuffers(scene_args::window);
 		

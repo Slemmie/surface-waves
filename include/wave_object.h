@@ -20,7 +20,35 @@ public:
 	
 	void init(const char* vert_path, const char* frag_path);
 	
-	void draw(const float time_now, const std::vector <Light>& lights);
+	void draw(const float time_now, const Light& light);
+	
+	inline const glm::vec3& ambient() const {
+		return m_ambient;
+	}
+	inline glm::vec3& ambient() {
+		return m_ambient;
+	}
+	
+	inline const glm::vec3& diffuse() const {
+		return m_diffuse;
+	}
+	inline glm::vec3& diffuse() {
+		return m_diffuse;
+	}
+	
+	inline const glm::vec3& specular() const {
+		return m_specular;
+	}
+	inline glm::vec3& specular() {
+		return m_specular;
+	}
+	
+	inline float shininess() const {
+		return m_shininess;
+	}
+	inline float shininess() {
+		return m_shininess;
+	}
 	
 	inline unsigned int vao() const {
 		return m_vao;
@@ -39,5 +67,10 @@ private:
 	unsigned int m_vao, m_vbo, m_ebo;
 	
 	std::shared_ptr <Shader_program> m_shader_program;
+	
+	glm::vec3 m_ambient;
+	glm::vec3 m_diffuse;
+	glm::vec3 m_specular;
+	float m_shininess;
 	
 };

@@ -8,7 +8,12 @@ uniform mat4 u_model;
 
 uniform float u_time;
 
-uniform vec3 u_light_color;
+struct Light {
+	vec3 ambient;
+	vec3 diffuse;
+};
+
+uniform Light u_light;
 
 out vec3 light_color;
 
@@ -17,5 +22,5 @@ out float ypos;
 void main() {
 	gl_Position = u_projection * u_view * u_model * vec4(vpos, 1.0f);
 	ypos = vpos.y;
-	light_color = u_light_color;
+	light_color = u_light.ambient + u_light.diffuse;
 }

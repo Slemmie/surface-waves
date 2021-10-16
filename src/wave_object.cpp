@@ -12,7 +12,11 @@ Waves::Waves() :
 m_vao(0),
 m_vbo(0),
 m_ebo(0),
-m_shader_program(nullptr)
+m_shader_program(nullptr),
+m_ambient(0.5f, 0.5f, 0.7f),
+m_diffuse(0.45f, 0.4f, 0.9f),
+m_specular(0.6f, 0.6f, 0.7f),
+m_shininess(64.0f)
 {
 	
 }
@@ -67,7 +71,7 @@ void Waves::init(const char* vert_path, const char* frag_path) {
 	glBindVertexArray(0);
 }
 
-void Waves::draw(const float time_now, const std::vector <Light>& lights) {
+void Waves::draw(const float time_now, const Light& light) {
 	m_shader_program->bind();
 	glBindVertexArray(m_vao);
 	
@@ -83,14 +87,17 @@ void Waves::draw(const float time_now, const std::vector <Light>& lights) {
 	
 	m_shader_program->set_uniform_1f("u_time", time_now);
 	
-	for (size_t i = 0; i < lights.size(); i++) {
-		std::string uname = "u_light_" + std::to_string(i);
-		m_shader_program->set_uniform_vec3f(uname.c_str(), lights[i].light_color());
-		uname += "_pos";
-		m_shader_program->set_uniform_vec3f(uname.c_str(), lights[i].light_pos());
-	}
+	m_shader_program->set_uniform_vec3f("u_light.position", light.light_pos());
+	m_shader_program->set_uniform_vec3f("u_light.ambient", light.ambient());
+	m_shader_program->set_uniform_vec3f("u_light.diffuse", light.diffuse());
+	m_shader_program->set_uniform_vec3f("u_light.specular", light.specular());
 	
 	m_shader_program->set_uniform_vec3f("u_view_pos", scene_args::camera->position());
+	
+	m_shader_program->set_uniform_vec3f("u_material.ambient", ambient());
+	m_shader_program->set_uniform_vec3f("u_material.diffuse", diffuse());
+	m_shader_program->set_uniform_vec3f("u_material.specular", specular());
+	m_shader_program->set_uniform_1f("u_material.shininess", shininess());
 	
 	int triangles = (settings::plane_resolution - 1) * (settings::plane_resolution - 1);
 	glDrawElements(GL_TRIANGLES, triangles * 3 * 2, GL_UNSIGNED_INT, 0);

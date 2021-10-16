@@ -19,8 +19,16 @@ public:
 	
 	void draw(const float time_now);
 	
-	inline const glm::vec3& light_color() const {
-		return m_light_color;
+	inline const glm::vec3& ambient() const {
+		return m_ambient;
+	}
+	
+	inline const glm::vec3& diffuse() const {
+		return m_diffuse;
+	}
+	
+	inline const glm::vec3& specular() const {
+		return m_specular;
 	}
 	
 	inline const glm::vec3& light_pos() const {
@@ -45,7 +53,9 @@ private:
 	
 	std::shared_ptr <Shader_program> m_shader_program;
 	
-	glm::vec3 m_light_color;
+	glm::vec3 m_ambient;
+	glm::vec3 m_diffuse;
+	glm::vec3 m_specular;
 	
 	glm::vec3 m_position, m_scale;
 	

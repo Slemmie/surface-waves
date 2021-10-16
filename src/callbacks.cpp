@@ -4,6 +4,7 @@
 #include <GLFW/glfw3.h>
 
 #include <scene_args.h>
+#include <settings.h>
 
 #include <iostream>
 
@@ -95,6 +96,8 @@ namespace callback {
 	
 	void window_resize(GLFWwindow* window, int width, int height) {
 		glViewport(0, 0, width, height);
+		settings::window_width = width;
+		settings::window_height = height;
 	}
 	
 	void mouse_move(GLFWwindow* window, double x_pos, double y_pos) {

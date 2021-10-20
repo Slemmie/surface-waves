@@ -50,5 +50,5 @@ void main() {
 	
 	// final
 	vec3 final = ambient + diffuse + specular;
-	frag_color = vec4(final, 0.6f);
+	frag_color = vec4(final, 0.8f);
 }

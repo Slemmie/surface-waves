@@ -12,6 +12,8 @@ namespace settings {
 	extern const int plane_resolution;
 	extern const int plane_size;
 	
+	extern const int water_depth;
+	
 	extern float render_distance;
 	
 } /// namespace settings

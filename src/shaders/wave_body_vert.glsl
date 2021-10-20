@@ -52,15 +52,17 @@ void main() {
 	bool is_down = vert_info.w >= 0.1f;
 	
 	vec3 result_pos = vert_pos;
-	result_pos.y = 0.0f;
-	for (int i = 0; i < WAVE_COUNT; i++) {
-		result_pos += gerstner_wave(waves[i], vert_pos) * wave_scale[i];
-	}
-	result_pos.y += vert_pos.x * vert_pos.x * -0.00005f + vert_pos.z * vert_pos.z * -0.00005f;
-	result_pos.y = max(result_pos.y, -110.0f);
-	
-	if (is_down) {
-		result_pos.y = vert_pos.y;
+	if (vert_info.w < 1.1f) {
+		result_pos.y = 0.0f;
+		for (int i = 0; i < WAVE_COUNT; i++) {
+			result_pos += gerstner_wave(waves[i], vert_pos) * wave_scale[i];
+		}
+		result_pos.y += vert_pos.x * vert_pos.x * -0.00005f + vert_pos.z * vert_pos.z * -0.00005f;
+		result_pos.y = max(result_pos.y, -110.0f);
+		
+		if (is_down) {
+			result_pos.y = vert_pos.y;
+		}
 	}
 	
 	gl_Position = u_projection * u_view * u_model * vec4(result_pos, 1.0f);

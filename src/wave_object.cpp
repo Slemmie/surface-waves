@@ -112,10 +112,10 @@ Waves::Body::Body() :
 m_vao(0),
 m_vbo(0),
 m_ebo(0),
-m_body_depth(-250),
-m_ambient(0.87f, 0.87f, 0.98f),
+m_body_depth(settings::water_depth),
+m_ambient(1.87f, 1.87f, 2.98f),
 m_diffuse(0.55f, 0.6f, 0.95f),
-m_specular(0.6f, 0.6f, 0.7f),
+m_specular(0.0f, 0.0f, 0.0f),
 m_shininess(32.0f)
 { }
 
@@ -129,7 +129,7 @@ void Waves::Body::init(const char* vert_path, const char* frag_path) {
 	m_shader_program = std::make_shared <Shader_program> (vert_path, frag_path);
 	
 	// x, y, z, up/down
-	float vertices[(settings::plane_resolution - 1) * 4 * 2 * (3 + 1)];
+	float vertices[(settings::plane_resolution - 1) * 4 * 2 * (3 + 1) + 1 * (3 + 1)];
 	int ptr = 0;
 	float shift = -1.0f * (float)settings::plane_size / 2.0f;
 	for (int i = 0; i < settings::plane_resolution - 1; i++) {
@@ -196,8 +196,12 @@ void Waves::Body::init(const char* vert_path, const char* frag_path) {
 		vertices[ptr++] = which_j;
 		vertices[ptr++] = 1.0f;
 	}
+	vertices[ptr++] = 0;
+	vertices[ptr++] = m_body_depth;
+	vertices[ptr++] = 0;
+	vertices[ptr++] = 2;
 	
-	unsigned int indices[((settings::plane_resolution - 1) * 4) * 3 * 2];
+	unsigned int indices[((settings::plane_resolution - 1) * 4) * 3 * (2 + 1)];
 	ptr = 0;
 	for (int i = 0; i < ((settings::plane_resolution - 1) * 4) - 1; i++) {
 		int ind_ptr = i * 2;
@@ -221,6 +225,19 @@ void Waves::Body::init(const char* vert_path, const char* frag_path) {
 		indices[ptr++] = 0;
 		indices[ptr++] = 1;
 		indices[ptr++] = ind_ptr + 1;
+	}
+	for (int i = 0; i < ((settings::plane_resolution - 1) * 4) - 1; i++) {
+		int ind_ptr = i * 2;
+		indices[ptr++] = ind_ptr + 1;
+		indices[ptr++] = ((settings::plane_resolution - 1) * 4 * 2 + 1) - 1;
+		indices[ptr++] = ind_ptr + 3;
+	}
+	{
+		int ind_ptr = ((settings::plane_resolution - 1) * 4) - 1;
+		ind_ptr *= 2;
+		indices[ptr++] = ind_ptr + 1;
+		indices[ptr++] = ((settings::plane_resolution - 1) * 4 * 2 + 1) - 1;
+		indices[ptr++] = 1;
 	}
 	
 	glGenVertexArrays(1, &m_vao);
@@ -284,6 +301,9 @@ void Waves::Body::draw(const float time_now, const Light& light) {
 	for (int i = 0; i < 4; i++) {
 		glDrawElements(GL_TRIANGLES, side, GL_UNSIGNED_INT, (void*)(order[i].second * side * sizeof(unsigned int)));
 	}
+	
+	void* bottom_offset = (void*)(((settings::plane_resolution - 1) * 4) * 3 * 2 * sizeof(unsigned int));
+	glDrawElements(GL_TRIANGLES, ((settings::plane_resolution - 1) * 4) * 3, GL_UNSIGNED_INT, bottom_offset);
 	
 	glBindVertexArray(0);
 	m_shader_program->unbind();

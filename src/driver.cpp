@@ -27,6 +27,7 @@ float settings::bg_g = 0.2f;
 float settings::bg_b = 0.2f;
 const int settings::plane_resolution = 2000;
 const int settings::plane_size = 400;
+const int settings::water_depth = -250;
 float settings::render_distance = 5000.0f;
 
 int main() {

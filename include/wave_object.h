@@ -19,8 +19,14 @@ public:
 	~Waves();
 	
 	void init(const char* vert_path, const char* frag_path);
+	inline void init_body(const char* vert_path, const char* frag_path) {
+		m_body.init(vert_path, frag_path);
+	}
 	
 	void draw(const float time_now, const Light& light);
+	void draw_body(const float time_now, const Light& light) {
+		m_body.draw(time_now, light);
+	}
 	
 	inline const glm::vec3& ambient() const {
 		return m_ambient;
@@ -72,5 +78,32 @@ private:
 	glm::vec3 m_diffuse;
 	glm::vec3 m_specular;
 	float m_shininess;
+	
+	class Body {
+		
+	public:
+		
+		Body();
+		
+		~Body();
+		
+		void init(const char* vert_path, const char* frag_path);
+		
+		void draw(const float time_now, const Light& light);
+		
+	private:
+		
+		unsigned int m_vao, m_vbo, m_ebo;
+		
+		std::shared_ptr <Shader_program> m_shader_program;
+		
+		float m_body_depth;
+		
+		glm::vec3 m_ambient;
+		glm::vec3 m_diffuse;
+		glm::vec3 m_specular;
+		float m_shininess;
+		
+	} m_body;
 	
 };

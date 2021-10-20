@@ -80,7 +80,7 @@ void Light::draw(const float time_now) {
 	glm::mat4 view = scene_args::camera->view_matrix();
 	m_shader_program->set_uniform_mat4f("u_view", view);
 	
-	m_position = glm::vec3(std::sin(time_now * 0.006f) * 225.0f, 100.0f, std::cos(time_now * 0.006f) * 225.0f);
+	m_position = glm::vec3(std::sin(time_now * 0.06f) * 425.0f, 175.0f, std::cos(time_now * 0.06f) * 425.0f);
 	
 	glm::mat4 model = glm::mat4(1.0f);
 	glm::vec3 position = m_position;

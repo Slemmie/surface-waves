@@ -12,4 +12,6 @@ namespace settings {
 	extern const int plane_resolution;
 	extern const int plane_size;
 	
+	extern float render_distance;
+	
 } /// namespace settings

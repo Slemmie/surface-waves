@@ -25,8 +25,9 @@ int settings::window_height = 864;
 float settings::bg_r = 0.2f;
 float settings::bg_g = 0.2f;
 float settings::bg_b = 0.2f;
-const int settings::plane_resolution = 3000;
-const int settings::plane_size = 2000;
+const int settings::plane_resolution = 2000;
+const int settings::plane_size = 400;
+float settings::render_distance = 5000.0f;
 
 int main() {
 	
@@ -84,6 +85,7 @@ int main() {
 	
 	Waves waves;
 	waves.init("src/shaders/wave_vert.glsl", "src/shaders/wave_frag.glsl");
+	waves.init_body("src/shaders/wave_body_vert.glsl", "src/shaders/wave_body_frag.glsl");
 	
 	Light light;
 	light.init("src/shaders/lightsource_vert.glsl", "src/shaders/lightsource_frag.glsl");
@@ -106,6 +108,7 @@ int main() {
 		
 		light.draw(time_now);
 		
+		waves.draw_body(time_now, light);
 		waves.draw(time_now, light);
 		
 		glfwSwapBuffers(scene_args::window);

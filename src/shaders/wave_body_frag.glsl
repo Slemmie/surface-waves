@@ -26,21 +26,15 @@ uniform vec3 u_view_pos;
 in vec3 normal;
 
 in vec3 frag_pos;
+in vec3 default_pos;
 
 #define PI_f 3.1415926538f
 
 void main() {
 	vec3 norm = normalize(normal);
-	vec3 light_dir = normalize(u_light.position - frag_pos);
-	vec3 view_dir = normalize(u_view_pos - frag_pos);
 	
-	// don't color if facing away
-	vec3 surf_normal = cross(dFdx(frag_pos), dFdy(frag_pos));
-	surf_normal = normalize(surf_normal * sign(surf_normal.z));
-	if (acos(dot(view_dir, surf_normal)) > PI_f * 1.0f) {
-		frag_color = vec4(0.0f, 0.0f, 0.0f, 0.0f);
-		return;
-	}
+	vec3 light_dir = normalize(u_light.position - default_pos);
+	vec3 view_dir = normalize(u_view_pos - default_pos);
 	
 	// ambient
 	vec3 ambient = u_light.ambient * u_material.ambient;
@@ -56,5 +50,5 @@ void main() {
 	
 	// final
 	vec3 final = ambient + diffuse + specular;
-	frag_color = vec4(final, 0.8f);
+	frag_color = vec4(final, 0.6f);
 }
